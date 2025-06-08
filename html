@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en" class="transition-colors duration-500">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Phone Number Tracker</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+
+    body {
+
+      background: linear-gradient(270deg, #00c9ff, #92fe9d);
+
+      background-size: 400% 400%;
+
+      animation: gradientBG 10s ease infinite;
+
+    }
+
+
+
+    @keyframes gradientBG {
+
+      0% { background-position: 0% 50%; }
+
+      50% { background-position: 100% 50%; }
+
+      100% { background-position: 0% 50%; }
+
+    }
+
+
+
+    .glass {
+
+      background: rgba(255, 255, 255, 0.15);
+
+      border-radius: 16px;
+
+      backdrop-filter: blur(10px);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    }
+
+
+
+    .glass:hover {
+
+      transform: translateY(-5px);
+
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+
+    }
+
+
+
+    .dark body {
+
+      background: linear-gradient(270deg, #1a1a2e, #16213e);
+
+    }
+
+  </style>
+
+</head>
+
+<body class="text-white min-h-screen flex items-center justify-center px-4">
+
+  <div class="absolute top-6 right-6">
+
+    <label class="flex items-center gap-2 cursor-pointer text-white">
+
+      <input type="checkbox" id="themeToggle" class="toggle-input hidden" />
+
+      <span class="text-sm font-medium">Dark Mode</span>
+
+    </label>
+
+  </div>
+
+
+
+  <div class="max-w-xl w-full text-center space-y-6">
+
+    <h1 class="text-4xl font-bold drop-shadow-lg">Phone Number Tracker</h1>
+
+    <p class="text-white/90">Enter any phone number with country code to find details.</p>
+
+
+
+    <input id="phoneInput" type="text" placeholder="+12069220880"
+
+           class="w-full px-6 py-3 rounded-lg text-black outline-none shadow-md" />
+
+
+
+    <button onclick="trackNumber()" class="bg-white text-black font-bold py-3 px-8 rounded-lg hover:bg-gray-200 transition-all">
+
+      Track Number
+
+    </button>
+
+
+
+    <div id="result" class="mt-6 space-y-4"></div>
+
+  </div>
+
+
+
+  <script>
+
+    const API_KEY = "num_live_uTHbNdSSWfl2ZKCPtN4IvZ0ezohwPvcazz7q77ip";
+
+
+
+    async function trackNumber() {
+
+      const phone = document.getElementById("phoneInput").value.trim();
+
+      if (!phone) return alert("Please enter a phone number");
+
+
+
+      const resultBox = document.getElementById("result");
+
+      resultBox.innerHTML = `<div class="text-lg font-medium animate-pulse">Fetching details...</div>`;
+
+
+
+      try {
+
+        const response = await fetch(`https://api.numlookupapi.com/v1/validate/${phone}?apikey=${API_KEY}`);
+
+        const data = await response.json();
+
+
+
+        if (data.valid) {
+
+          resultBox.innerHTML = `
+
+            <div class="glass p-6 rounded-xl text-left">
+
+              <h2 class="text-2xl font-semibold mb-2">Details:</h2>
+
+              <p><strong>Number:</strong> ${data.international_format}</p>
+
+              <p><strong>Country:</strong> ${data.country_name}</p>
+
+              <p><strong>Location:</strong> ${data.location || 'Not Available'}</p>
+
+              <p><strong>Carrier:</strong> ${data.carrier || 'Not Available'}</p>
+
+              <p><strong>Line Type:</strong> ${data.line_type || 'Not Available'}</p>
+
+            </div>`;
+
+        } else {
+
+          resultBox.innerHTML = `<div class="glass p-6 rounded-xl">Invalid phone number!</div>`;
+
+        }
+
+      } catch (err) {
+
+        resultBox.innerHTML = `<div class="glass p-6 rounded-xl text-red-500 font-semibold">Error fetching data.</div>`;
+
+      }
+
+    }
+
+
+
+    // Dark mode toggle
+
+    document.getElementById("themeToggle").addEventListener("change", function () {
+
+      document.documentElement.classList.toggle("dark");
+
+    });
+
+  </script>
+
+</body>
+
+</html>
