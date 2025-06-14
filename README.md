@@ -1,12 +1,18 @@
 🚀 Just Built a Beautifully Animated Phone Number Tracker! 📱
 I'm excited to share my latest project - a fully responsive *Phone Number Tracker Web App* built using pure *HTML, CSS, and JavaScript*, powered by the  API!
 
+<div align="center">
+  <img src="Screenshot_2025-06-14-16-43-18-48_254de13a4bc8758c9908fff1f73e3725.jpg" alt="DevOpsShack Banner">
+</div>
 Key Features:
 ✨ Animated gradient background
 ✨ Glassmorphism UI with glowing result box
 ✨ Dark mode toggle
 ✨ Responsive design for all devices
 ✨ Real-time tracking with detailed output (location, carrier, line type, and more)
+<div align="center">
+  <img src="Screenshot_2025-06-14-16-43-39-01_254de13a4bc8758c9908fff1f73e3725.jpg" alt="DevOpsShack Banner">
+</div>
 
 ###Techstack
 
